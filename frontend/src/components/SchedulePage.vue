@@ -44,7 +44,7 @@
     methods: {
       async generateSchedule() {
         try {
-          const response = await fetch('http://localhost:3000/api/genetic/generateSchedule');
+          const response = await fetch('https://scheduling-gist.onrender.com/api/genetic/generateSchedule');
           const data = await response.json();
           this.schedule = data;
         } catch (error) {

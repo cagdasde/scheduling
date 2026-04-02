@@ -53,12 +53,12 @@ export default {
   },
   methods: {
     async fetchRooms() {
-      const res = await fetch("http://localhost:3000/api/classrooms");
+      const res = await fetch("https://scheduling-gist.onrender.com/api/classrooms");
       this.rooms = await res.json();
     },
     async deleteRoom(id) {
       if (!confirm("Bu sınıfı silmek istediğinize emin misiniz?")) return;
-      await fetch(`http://localhost:3000/api/classrooms/${id}`, { method: "DELETE" });
+      await fetch(`https://scheduling-gist.onrender.com/api/classrooms/${id}`, { method: "DELETE" });
       this.fetchRooms();
     },
     startEdit(room) {
@@ -79,7 +79,7 @@ export default {
 
       const { id, name, capacity } = this.editing;
 
-      await fetch(`http://localhost:3000/api/classrooms/${id}`, {
+      await fetch(`https://scheduling-gist.onrender.com/api/classrooms/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, capacity, equipment_available: equipmentArray }),

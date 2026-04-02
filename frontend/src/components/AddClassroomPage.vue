@@ -70,7 +70,7 @@ export default {
       if (this.loading) return;
       this.loading = true;
       try {
-        const res = await fetch("http://localhost:3000/api/classrooms", {
+        const res = await fetch("https://scheduling-gist.onrender.com/api/classrooms", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
