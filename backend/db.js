@@ -1,21 +1,7 @@
-// backend/db.js
-const mysql = require('mysql2');
-require('dotenv').config();
+const { Pool } = require("pg");
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '', // ← şifren varsa buraya yaz
-  database: 'class_schelude'
-  
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
 });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Veritabanı bağlantı hatası:', err);
-    return;
-  }
-  console.log('MySQL bağlantısı başarılı.');
-});
-
-module.exports = connection;
+module.exports = pool;
