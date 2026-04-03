@@ -60,15 +60,18 @@
     methods: {
       async fetchCourses() {
         try {
-          const response = await axios.get('https://scheduling-gist.onrender.com/api/courses');
+          const API = import.meta.env.VITE_API_URL;
+
+        const response = await axios.get(`${API}/api/courses`);
           this.courses = response.data;
         } catch (error) {
           console.error('Dersler alınırken hata:', error);
         }
       },
       async fetchClassrooms() {
-        try {
-          const response = await axios.get('https://scheduling-gist.onrender.com/api/classrooms');
+        try {const API = import.meta.env.VITE_API_URL;
+
+const response = await axios.get(`${API}/api/classrooms`);
           this.classrooms = response.data;
         } catch (error) {
           console.error('Sınıflar alınırken hata:', error);

@@ -70,13 +70,15 @@ export default {
       if (this.loading) return;
       this.loading = true;
       try {
-        const res = await fetch("https://scheduling-gist.onrender.com/api/classrooms", {
+        const API = import.meta.env.VITE_API_URL;
+
+        const res = await fetch(`${API}/api/classrooms`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             name: this.name,
             capacity: this.capacity,
-            equipment: this.selectedEquipment,
+            equipment_available: this.selectedEquipment,
           }),
         });
         if (!res.ok) throw new Error("Sınıf ekleme hatası");

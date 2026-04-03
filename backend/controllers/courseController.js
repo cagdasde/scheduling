@@ -2,26 +2,31 @@
 const db = require('../db');
 
 // Tüm dersleri listele
-exports.getAllCourses = (req, res) => {
-  db.query('SELECT * FROM courses', (err, results) => {
-    if (err) {
-      console.error('Dersler getirilirken hata:', err);
-      return res.status(500).send('Sunucu hatası');
-    }
-    res.json(results);
-  });
+exports.getAllCourses = async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM courses');
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Dersler getirilirken hata:', err);
+    res.status(500).send('Sunucu hatası');
+  }
 };
 
 // Yeni ders ekle
-exports.addCourse = (req, res) => {
+exports.addCourse = async (req, res) => {
   const { name, hours_per_week } = req.body;
-  const query = 'INSERT INTO courses (name, hours_per_week) VALUES (?, ?)';
 
-  db.query(query, [name, hours_per_week], (err, results) => {
-    if (err) {
-      console.error('Ders eklenirken hata:', err);
-      return res.status(500).send('Sunucu hatası');
-    }
-    res.status(201).send('Ders başarıyla eklendi');
-  });
+  const query = `
+    INSERT INTO courses (name, hours_per_week)
+    VALUES ($1, $2)
+    RETURNING *;
+  `;
+
+  try {
+    const result = await db.query(query, [name, hours_per_week]);
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error('Ders eklenirken hata:', err);
+    res.status(500).send('Sunucu hatası');
+  }
 };

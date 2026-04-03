@@ -5,11 +5,13 @@ const db = require("../db");
 // 1. Tüm sınıfları listele
 router.get("/", async (req, res) => {
   try {
-    const [rows] = await db.promise().query("SELECT * FROM classrooms");
-    const classrooms = rows.map(row => ({
+    const result = await db.query("SELECT * FROM classrooms");
+
+    const classrooms = result.rows.map(row => ({
       ...row,
       equipment_available: safelyParseJSON(row.equipment_available),
     }));
+
     res.json(classrooms);
   } catch (err) {
     console.error("Sınıflar getirirken hata:", err);
@@ -28,17 +30,14 @@ router.post("/", async (req, res) => {
   try {
     const equipmentStr = JSON.stringify(equipment_available || []);
 
-    const [result] = await db.promise().query(
-      "INSERT INTO classrooms (name, capacity, equipment_available) VALUES (?, ?, ?)",
+    const result = await db.query(
+      `INSERT INTO classrooms (name, capacity, equipment_available)
+       VALUES ($1, $2, $3)
+       RETURNING *`,
       [name, capacity, equipmentStr]
     );
 
-    res.status(201).json({
-      id: result.insertId,
-      name,
-      capacity,
-      equipment_available: equipment_available || [],
-    });
+    res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error("Sınıf eklenirken hata:", err);
     res.status(500).json({ error: "Sunucu hatası" });
@@ -57,8 +56,10 @@ router.put("/:id", async (req, res) => {
   try {
     const equipmentStr = JSON.stringify(equipment_available || []);
 
-    await db.promise().query(
-      "UPDATE classrooms SET name = ?, capacity = ?, equipment_available = ? WHERE id = ?",
+    await db.query(
+      `UPDATE classrooms
+       SET name = $1, capacity = $2, equipment_available = $3
+       WHERE id = $4`,
       [name, capacity, equipmentStr, id]
     );
 
@@ -72,8 +73,9 @@ router.put("/:id", async (req, res) => {
 // 4. Sınıf sil
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
+
   try {
-    await db.promise().query("DELETE FROM classrooms WHERE id = ?", [id]);
+    await db.query("DELETE FROM classrooms WHERE id = $1", [id]);
     res.json({ message: "Sınıf silindi" });
   } catch (err) {
     console.error("Sınıf silinirken hata:", err);
@@ -81,7 +83,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// Yardımcı fonksiyon: JSON.parse güvenli şekilde
+// JSON parse helper
 function safelyParseJSON(value) {
   try {
     return JSON.parse(value || "[]");
