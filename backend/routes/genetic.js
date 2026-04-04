@@ -19,3 +19,4 @@ router.get('/generateSchedule', async (req, res) => {
     res.status(500).send('Sunucu hatası');
   }
 });
+module.exports = router;
