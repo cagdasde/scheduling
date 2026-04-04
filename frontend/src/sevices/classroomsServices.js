@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/classrooms";
+const API_URL = "https://scheduling-gist.onrender.com/api/classrooms";
 
 export default {
   getAll() {

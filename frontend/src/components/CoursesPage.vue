@@ -43,13 +43,13 @@ export default {
   },
   methods: {
     async fetchCourses() {
-      const res = await fetch("http://localhost:3000/api/courses");
+      const res = await fetch("https://scheduling-gist.onrender.com/api/courses");
       this.courses = await res.json();
       console.log(this.courses);
     },
     async deleteCourse(id) {
       if (!confirm("Bu dersi silmek istediğinize emin misiniz?")) return;
-      await fetch(`http://localhost:3000/api/courses/${id}`, { method: "DELETE" });
+      await fetch(`https://scheduling-gist.onrender.com/api/courses/${id}`, { method: "DELETE" });
       this.fetchCourses();
     },
     startEdit(course) {
@@ -60,7 +60,7 @@ export default {
     },
     async saveEdit() {
       const { id, code, name, instructor } = this.editingCourse;
-      await fetch(`http://localhost:3000/api/courses/${id}`, {
+      await fetch(`https://scheduling-gist.onrender.com/api/courses/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code, name, instructor }),

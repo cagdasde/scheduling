@@ -123,7 +123,7 @@ export default {
     async generateFromExcel(){
       if(!this.excelData.length) return alert("Önce Excel seç");
       try {
-        const res=await axios.post("http://localhost:3000/api/run-ga",this.excelData);
+        const res=await axios.post("https://scheduling-gist.onrender.com/api/run-ga",this.excelData);
         // Eski API diziyi direkt dönüyor olabilir
         if (Array.isArray(res.data)) {
           this.schedule = res.data;
@@ -143,7 +143,7 @@ export default {
     async generateFromDB(){
       try {
         console.log("📡 API çağrısı yapılıyor...");
-        const res = await axios.get("http://localhost:3000/api/generateSchedule");
+        const res = await axios.get("https://scheduling-gist.onrender.com/api/generateSchedule");
         console.log("📥 API Yanıtı:", res.data);
         
         // ÖNEMLİ: timetable dizisini al, tüm response'u değil!

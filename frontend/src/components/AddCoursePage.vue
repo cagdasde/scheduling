@@ -85,7 +85,7 @@ export default {
   methods: {
     async addCourse() {
       try {
-        const response = await fetch('http://localhost:3000/api/courses', {
+        const response = await fetch('https://scheduling-gist.onrender.com/api/courses', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(this.course),
