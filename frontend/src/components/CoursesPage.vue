@@ -6,8 +6,8 @@
       <ul v-if="courses.length" class="list">
         <li v-for="course in courses" :key="course.id" class="list-item">
           <template v-if="editingCourse?.id === course.id">
-            <input v-model="editingCourse.code" class="input-code" />
-            <input v-model="editingCourse.name" class="input-name" />
+            <input v-model="editingCourse.course_code" class="input-code" />
+            <input v-model="editingCourse.course_name" class="input-name" />
             <input v-model="editingCourse.instructor" class="input-instructor" />
             <button @click="saveEdit" class="btn save">💾</button>
             <button @click="cancelEdit" class="btn cancel">✖️</button>
@@ -15,7 +15,7 @@
 
           <template v-else>
             <div class="course-info">
-              <strong>{{ course.code }}</strong>: {{ course.name }} – {{ course.instructor }}
+              <strong>{{ course.course_code }}</strong>: {{ course.course_name }} – {{ course.instructor_id }}
             </div>
             <div class="actions">
               <button @click="startEdit(course)" class="btn edit">✏️</button>
@@ -43,13 +43,13 @@ export default {
   },
   methods: {
     async fetchCourses() {
-      const res = await fetch("https://scheduling-gist.onrender.com/api/courses");
-      console.log("burada",res);
+      const res = await fetch("http://localhost:3000/api/courses");
       this.courses = await res.json();
+      console.log(this.courses);
     },
     async deleteCourse(id) {
       if (!confirm("Bu dersi silmek istediğinize emin misiniz?")) return;
-      await fetch(`https://scheduling-gist.onrender.com/api/courses/${id}`, { method: "DELETE" });
+      await fetch(`http://localhost:3000/api/courses/${id}`, { method: "DELETE" });
       this.fetchCourses();
     },
     startEdit(course) {
@@ -60,7 +60,7 @@ export default {
     },
     async saveEdit() {
       const { id, code, name, instructor } = this.editingCourse;
-      await fetch(`https://scheduling-gist.onrender.com/api/courses/${id}`, {
+      await fetch(`http://localhost:3000/api/courses/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code, name, instructor }),

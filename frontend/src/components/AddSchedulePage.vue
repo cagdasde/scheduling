@@ -60,18 +60,15 @@
     methods: {
       async fetchCourses() {
         try {
-          const API = "https://scheduling-gist.onrender.com";
-
-        const response = await axios.get(`${API}/api/courses`);
+          const response = await axios.get('http://localhost:3000/api/courses');
           this.courses = response.data;
         } catch (error) {
           console.error('Dersler alınırken hata:', error);
         }
       },
       async fetchClassrooms() {
-        try {const API = "https://scheduling-gist.onrender.com";
-
-const response = await axios.get(`${API}/api/classrooms`);
+        try {
+          const response = await axios.get('http://localhost:3000/api/classrooms');
           this.classrooms = response.data;
         } catch (error) {
           console.error('Sınıflar alınırken hata:', error);
@@ -79,7 +76,7 @@ const response = await axios.get(`${API}/api/classrooms`);
       },
       async addSchedule() {
         try {
-          await axios.post('https://scheduling-gist.onrender.com/api/schedules', this.newSchedule);
+          await axios.post('http://localhost:3000/api/schedules', this.newSchedule);
           this.$router.push('/schedules'); // Planlama başarıyla eklendikten sonra listeye dön
         } catch (error) {
           console.error('Planlama eklenirken hata:', error);
