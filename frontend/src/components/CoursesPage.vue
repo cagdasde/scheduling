@@ -44,6 +44,7 @@ export default {
   methods: {
     async fetchCourses() {
       const res = await fetch("https://scheduling-gist.onrender.com/api/courses");
+      console.log("burada",res);
       this.courses = await res.json();
     },
     async deleteCourse(id) {
