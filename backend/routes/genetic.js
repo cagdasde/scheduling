@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../db');
 
 // Eğer generateSchedule fonksiyonun başka bir dosyadaysa:
-// const { generateSchedule } = require('../utils/geneticAlgorithm'); 
+ const { generateSchedule } = require('../utils/geneticAlgorithm'); 
 
 // GET /api/genetic/generateSchedule
 router.get('/generateSchedule', async (req, res) => {
