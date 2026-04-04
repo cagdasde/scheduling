@@ -7,8 +7,8 @@ exports.getAllCourses = async (req, res) => {
     const result = await db.query('SELECT * FROM courses');
     res.json(result.rows);
   } catch (err) {
-    console.error('Dersler getirilirken hata:', err);
-    res.status(500).send('Sunucu hatası');
+    console.error('Dersler getirilirken hataaa:', err);
+    res.status(500).send('Sunucu hatasıııı');
   }
 };
 

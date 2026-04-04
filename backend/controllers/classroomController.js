@@ -14,6 +14,6 @@ exports.addClassroom = async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error("Sınıf eklenirken hata:", err);
-    res.status(500).send("Sunucu hatası");
+    res.status(500).send("Sunucu hatasıııı");
   }
 };
