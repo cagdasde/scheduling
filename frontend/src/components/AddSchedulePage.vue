@@ -60,7 +60,7 @@
     methods: {
       async fetchCourses() {
         try {
-          const API = import.meta.env.VITE_API_URL;
+          const API = "https://scheduling-gist.onrender.com";
 
         const response = await axios.get(`${API}/api/courses`);
           this.courses = response.data;
@@ -69,7 +69,7 @@
         }
       },
       async fetchClassrooms() {
-        try {const API = import.meta.env.VITE_API_URL;
+        try {const API = "https://scheduling-gist.onrender.com";
 
 const response = await axios.get(`${API}/api/classrooms`);
           this.classrooms = response.data;

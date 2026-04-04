@@ -1,9 +1,10 @@
-const { Pool } = require("pg");
+// db.js
+const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL, // Render env değişkeninden al
   ssl: {
-    rejectUnauthorized: false, // Render için gerekli
+    rejectUnauthorized: false, // Render PostgreSQL için gerekli
   },
 });
 

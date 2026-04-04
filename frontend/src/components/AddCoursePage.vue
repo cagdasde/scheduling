@@ -85,7 +85,7 @@ export default {
   methods: {
     async addCourse() {
       try {
-        const API = import.meta.env.VITE_API_URL;
+        const API = "https://scheduling-gist.onrender.com";
 
 const res = await fetch(`${API}/api/courses`, {
           method: 'POST',

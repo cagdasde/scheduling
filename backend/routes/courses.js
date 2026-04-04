@@ -3,16 +3,16 @@ const router = express.Router();
 const db = require("../db");
 
 // GET /api/courses — Tüm dersleri getir
+
 router.get("/", async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM courses");
     res.json(result.rows);
   } catch (err) {
-    console.error("Dersleri getirirken hata:", err);
-    res.status(500).send("Sunucu hatası");
+    console.error("HATA DETAY:", err); // 👈 ÇOK ÖNEMLİ
+    res.status(500).send(err.message); // 👈 hatayı frontend'e gönder
   }
 });
-
 // POST /api/courses — Yeni ders ekle
 router.post("/", async (req, res) => {
   try {
