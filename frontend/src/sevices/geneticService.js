@@ -1,28 +1,24 @@
 import axios from "axios";
 
-const API_URL = "https://scheduling-gist.onrender.com/api/genetics";
+// Backend'deki app.use('/api/genetic', ...) tanımına tam uyumlu URL
+const API_URL = "https://scheduling-gist.onrender.com/api/genetic";
 
 export default {
+  // 1. Ders Programı Oluşturma (GA Tetikleme)
+  // URL: https://scheduling-gist.onrender.com/api/genetic/generateSchedule
+  generateSchedule() {
+    return axios.get(`${API_URL}/generateSchedule`);
+  },
+
+  // 2. Mevcut Programı Getirme (Eğer veritabanında saklıyorsan)
+  // URL: https://scheduling-gist.onrender.com/api/genetic
   getAll() {
     return axios.get(API_URL);
   },
-  add(genetic) {
-    return axios.post(API_URL, genetic);
-  },
-  update(id, genetic) {
-    return axios.put(`${API_URL}/${id}`, genetic);
-  },
+
+  // 3. Silme (ID ile)
+  // URL: https://scheduling-gist.onrender.com/api/genetic/:id
   delete(id) {
     return axios.delete(`${API_URL}/${id}`);
-  },
-  importExcel(file) {
-    const formData = new FormData();
-    formData.append("file", file);
-    return axios.post(`${API_URL}/import`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-  },
-  exportExcel() {
-    return axios.get(`${API_URL}/export`, { responseType: "blob" });
-  },
+  }
 };

@@ -143,7 +143,7 @@ export default {
     async generateFromDB(){
       try {
         console.log("📡 API çağrısı yapılıyor...");
-        const res = await axios.get("https://scheduling-gist.onrender.com/api/generateSchedule");
+        const res = await axios.get("https://scheduling-gist.onrender.com/api/genetic/generateSchedule");
         console.log("📥 API Yanıtı:", res.data);
         
         // ÖNEMLİ: timetable dizisini al, tüm response'u değil!
